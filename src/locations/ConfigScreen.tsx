@@ -1,32 +1,25 @@
 import * as _ from 'lodash'
 
-import { DisplayText, Flex, Form, FormControl, Heading, Note, Paragraph, Table, TextInput } from '@contentful/f36-components';
+import { DisplayText, Flex, Tabs } from '@contentful/f36-components';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { ConfigAppSDK } from '@contentful/app-sdk';
 import { css } from 'emotion';
 import { useSDK } from '@contentful/react-apps-toolkit';
-
-type TagProps = {
-  sys: any;
-  name: string;
-};
-
-export interface IRemotedAppUrl {
-  brand: string;
-  product: string;
-  url: string;
-  id: string;
-}
-export interface AppInstallationParameters {
-  ValueTagMapping: IRemotedAppUrl[],
-  ValueToValueMapping: {
-    [source: string]: string
-  }
- }
+import { TagProps } from 'contentful-management/types';
+import { AppInstallationParameters } from '../types';
+import { ValueTagMapping } from '../components';
 
 const ConfigScreen = () => {
-  const [parameters, setParameters] = useState<AppInstallationParameters>({});
+  const initParameters: AppInstallationParameters = {
+    ValueTagMapping: {
+
+    },
+    ValueToValueMapping: {
+
+    }
+  }
+  const [parameters, setParameters] = useState<AppInstallationParameters>(initParameters);
   const sdk = useSDK<ConfigAppSDK>();
   const cma = sdk.cma;
   const currentEnvironment = sdk.ids.environmentAlias ?? sdk.ids.environment
@@ -112,73 +105,25 @@ const ConfigScreen = () => {
     })();
   }, [sdk]);
 
-  const onUrlInputChanged = (event) => {
-    const target = event.target;
-
-    const formItems: IRemotedAppUrl = {
-      id: target.id,
-      url: target.value,
-      brand: target.id.split('-')[0],
-      product: target.id.split('-')[1]
-    }
-    setParameters({
-      ...parameters,
-      [target.id]: formItems
-    })
-  }
   return (
     <Flex flexDirection="column" className={css({ margin: '80px' })} gap="spacingS">
-      <DisplayText>This settings are applied to: {currentEnvironment.toLowerCase() === 'master' ? 'PRODUCTION' : currentEnvironment.toUpperCase()} environment</DisplayText>
-      <Note variant="warning" title="This app requires the tags to be created in the space. The tags should be named as follows:">
-        <Paragraph>
-          <b>Brand:</b> Brand:brand-name
-        </Paragraph>
-        <Paragraph>
-          <b>Product:</b> Product:product-name
-        </Paragraph>
-      </Note>
-      <Form>
-        <Heading>Remoted App URL Config</Heading>
-        <Table>
-          <Table.Head>
-            <Table.Row>
-              <Table.Cell>URL (Required)</Table.Cell>
-              <Table.Cell>Brand</Table.Cell>
-              <Table.Cell>Product</Table.Cell>
-            </Table.Row>
-          </Table.Head>
-          <Table.Body>
-            {
-              brandTags?.map(brand => {
-                return (
-                  productTags?.map(product => {
-                    return (
-                      <Table.Row key={brand.sys.id + product.sys.id}>
-                        <Table.Cell>
-                          <FormControl isRequired>
-                            <TextInput
-                              value={parameters[`${brand.sys.id}-${product.sys.id}`].url ?? ''}
-                              name={`${brand.sys.id}-${product.sys.id}`} id={`${brand.sys.id}-${product.sys.id}`}
-                              onChange={onUrlInputChanged} />
-                            <FormControl.HelpText>Enter the remoted app url for each Brand and Product</FormControl.HelpText>
-                          </FormControl>
-                        </Table.Cell>
-                        <Table.Cell>
-                            <DisplayText>{ brand.name.replace('Brand:', '') }</DisplayText>
-                        </Table.Cell>
-                        <Table.Cell>
-                          <DisplayText>{ product.name.replace('Product:', '') }</DisplayText>
-                        </Table.Cell>
-                      </Table.Row>
-                    )
-                  })
-                )
-              })
-            }
-          </Table.Body>
-        </Table>
+      <DisplayText>Those settings are applied to: {currentEnvironment.toLowerCase() === 'master' ? 'PRODUCTION' : currentEnvironment.toUpperCase()} environment</DisplayText>
 
-      </Form>
+      <Tabs defaultTab="valueTagMapping">
+        <Tabs.List>
+          <Tabs.Tab panelId="valueTagMapping">Remote URL for Brand-Product tags </Tabs.Tab>
+          <Tabs.Tab panelId="valueToValueMapping">Mapping Values</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel id="valueTagMapping">
+          <ValueTagMapping brandTags={brandTags} productTags={productTags} parameters={parameters} setParameters={setParameters} />
+        </Tabs.Panel>
+
+        <Tabs.Panel id="valueToValueMapping">
+          <Flex flexDirection="column" marginTop="spacingM" gap="spacingS">
+          </Flex>
+          </Tabs.Panel>
+      </Tabs>
+
 
     </Flex>
   );
