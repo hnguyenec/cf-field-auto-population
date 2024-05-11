@@ -11,6 +11,12 @@ dependencies:
   '@contentful/f36-components':
     specifier: 4.65.5
     version: 4.65.5(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1)(react@18.3.1)
+  '@contentful/f36-header':
+    specifier: 4.0.0-alpha.7
+    version: 4.0.0-alpha.7(react-dom@18.3.1)(react@18.3.1)
+  '@contentful/f36-icons':
+    specifier: ^4.28.2
+    version: 4.28.2(react-dom@18.3.1)(react@18.3.1)
   '@contentful/f36-tokens':
     specifier: 4.0.5
     version: 4.0.5
@@ -1882,6 +1888,22 @@ packages:
       '@contentful/f36-tokens': 4.0.5
       '@contentful/f36-typography': 4.65.5(react-dom@18.3.1)(react@18.3.1)
       '@contentful/f36-utils': 4.24.3(react-dom@18.3.1)(react@18.3.1)
+      emotion: 10.0.27
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    dev: false
+
+  /@contentful/f36-header@4.0.0-alpha.7(react-dom@18.3.1)(react@18.3.1):
+    resolution: {integrity: sha512-VHQHXgyYPVQ7IJu+V6qzLoDwTNXm7F/4JDIP5fLSDGQ+HayFFgayx+0lECurxqXYvyN30MyzMGcmGLVwB+hOeA==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      '@contentful/f36-button': 4.65.5(react-dom@18.3.1)(react@18.3.1)
+      '@contentful/f36-core': 4.65.5(react-dom@18.3.1)(react@18.3.1)
+      '@contentful/f36-icons': 4.28.2(react-dom@18.3.1)(react@18.3.1)
+      '@contentful/f36-tokens': 4.0.5
+      '@contentful/f36-typography': 4.65.5(react-dom@18.3.1)(react@18.3.1)
       emotion: 10.0.27
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)

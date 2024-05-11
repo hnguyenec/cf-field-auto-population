@@ -8,7 +8,7 @@ import { css } from 'emotion';
 import { useSDK } from '@contentful/react-apps-toolkit';
 import { TagProps } from 'contentful-management/types';
 import { AppInstallationParameters } from '../types';
-import { ValueTagMapping } from '../components';
+import { ValueTagMapping, ValueToValueMapping } from '../components';
 
 const ConfigScreen = () => {
   const initParameters: AppInstallationParameters = {
@@ -120,6 +120,7 @@ const ConfigScreen = () => {
 
         <Tabs.Panel id="valueToValueMapping">
           <Flex flexDirection="column" marginTop="spacingM" gap="spacingS">
+          <ValueToValueMapping brandTags={brandTags} productTags={productTags} parameters={parameters} setParameters={setParameters} />
           </Flex>
           </Tabs.Panel>
       </Tabs>
