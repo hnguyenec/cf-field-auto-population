@@ -5,7 +5,7 @@ export interface IRemotedAppUrl {
   id: string;
 }
 
-export interface AppInstallationParameters {
+export interface IAppInstallationParameters {
   ValueTagMapping: {
     [brandProductTag: string]: IRemotedAppUrl;
   },

@@ -1,14 +1,14 @@
 import { Flex, Form, IconButton, Heading, Text, Table, TextInput } from '@contentful/f36-components';
 import React, { useCallback, useEffect, useState } from 'react';
-import { AppInstallationParameters } from '../types';
+import { IAppInstallationParameters } from '../types';
 import _ from 'lodash';
 import { css } from 'emotion';
 import tokens from '@contentful/f36-tokens';
 import { PlusCircleIcon, ErrorCircleOutlineIcon, DeleteIcon } from '@contentful/f36-icons';
 
 interface IValueToValueMappingProps {
-  parameters: AppInstallationParameters
-  setParameters: React.Dispatch<React.SetStateAction<AppInstallationParameters>>
+  parameters: IAppInstallationParameters
+  setParameters: React.Dispatch<React.SetStateAction<IAppInstallationParameters>>
 }
 
 const styles = {
@@ -80,7 +80,7 @@ export const ValueToValueMapping = ({ parameters, setParameters }: IValueToValue
           <Table.Body>
             {
               valueMappings?.map((item, index) => (
-                <FromToComponent mappingList={parameters.ValueToValueMapping} data={item} onValueChanged={onValueMappingChanged} index={index} handleDelete={handleDelete}></FromToComponent>
+                <FromToComponent key={`${index}-${item.fromValue}-${item.toValue}`} mappingList={parameters.ValueToValueMapping} data={item} onValueChanged={onValueMappingChanged} index={index} handleDelete={handleDelete}></FromToComponent>
               ))
             }
           </Table.Body>
